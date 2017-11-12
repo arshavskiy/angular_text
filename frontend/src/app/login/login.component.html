@@ -1,0 +1,19 @@
+<main>
+  <img src="../../assets/logoS.png" alt="supermarket logo" />
+  <h2>Enter your login & password</h2>
+  <form>
+    <div class="login">
+      <input type="email" name="admin_name" [(ngModel)]="user.name" class="form-control" placeholder="Login name">
+    </div>
+    <div class="form-group">
+      <input type="password" name="admin_password" [(ngModel)]="user.password" class="form-control" placeholder="Password">
+    </div>
+  </form>
+  <button (click)="login()" type="button" class="btn">Login</button>
+  <!-- 
+  <form class="login">
+    <input type="text" name="admin_name" [(ngModel)]="user.name" placeholder="Full Name">
+    <input type="password" name="admin_password" [(ngModel)]="user.password" placeholder="Password">
+    <button (click)="login()" type="button" class="btn">Login</button>
+  </form> -->
+</main>

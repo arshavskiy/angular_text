@@ -1,0 +1,19 @@
+<section *ngIf="studentData">
+  <div class='img-holder'>
+    <!-- <img src='../../../assets/{{student.image}}'> -->
+  </div>
+  <div class='text-holder'>
+    <span>
+      <strong>{{ studentData.name }}</strong>
+    </span>
+    <span>
+      {{ studentData.email }}
+    </span>
+  </div>
+  <!-- <div *ngFor="let cours of studentCourses" class='student-container'>
+    <a href="">
+      <img src='../../../assets/{{cours.image}}'>
+      <strong> {{ cours.name }} </strong>
+    </a>
+  </div> -->
+</section>

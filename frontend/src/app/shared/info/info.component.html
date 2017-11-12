@@ -1,0 +1,42 @@
+<section>
+  <div class='img-holder'>
+    <img src='../../../assets/{{viewData.data.image}}'>
+  </div>
+  <div class='text-holder'>
+    <!-- <div (click)="getCourses(viewData.data.id)"> -->
+    <div>
+      <div class="name">
+        <strong>{{ viewData.data.name }}</strong>
+      </div>
+      <div class="email">
+        {{ viewData.data.email }} {{ viewData.data.des }}
+      </div>
+      <div class="phone">
+        {{ viewData.data.phone }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let cours of studentCourses" class="courses">
+    <div class="cours_image">
+      <img src='../../../assets/{{cours.image}}'>
+    </div>
+    <div class="cours_name">
+      <strong>
+        {{cours.name}}
+      </strong>
+    </div>
+  </div>
+
+  <div *ngFor="let student of courseStudents" class="courses">
+    <div class="cours_image">
+      <img src='../../../assets/{{student.image}}'>
+    </div>
+    <div class="cours_name">
+      <strong>
+        {{student.name}}
+      </strong>
+    </div>
+  </div>
+
+</section>
