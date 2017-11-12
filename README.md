@@ -1,5 +1,5 @@
 # angular_text
-Sschool admin project build with angular, node and mysql.
+Sschool admin project build with angular, node and mysql.<br>
 1. In data folder install theschool_db.sql data file local with XAMPP, 
 deploy in master folder 2 folder.<br>
 
