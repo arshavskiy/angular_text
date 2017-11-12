@@ -1,0 +1,23 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-add-component',
+  templateUrl: './add-component.component.html',
+  styleUrls: ['./add-component.component.css']
+})
+export class AddComponentComponent implements OnInit {
+  @Output() onClicked = new EventEmitter<any>();
+
+  editor: boolean = false;
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  openEditor() {
+    this.editor = !this.editor;
+    this.onClicked.emit(console.log(this.editor));
+
+  }
+
+}
