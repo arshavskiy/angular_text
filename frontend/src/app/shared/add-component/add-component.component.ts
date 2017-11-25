@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-component',
-  templateUrl: './add-component.component.html',
+  template: `<div (click)="openEditor()" class="add_button">+</div>`,
   styleUrls: ['./add-component.component.css']
 })
 export class AddComponentComponent implements OnInit {
