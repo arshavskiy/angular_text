@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Component({
@@ -12,18 +12,23 @@ export class InfoComponent implements OnInit {
   isStudent: boolean;
   private studentCourses: Array<any>;
   private courseStudents: Array<any>;
+  @Output() onClickEdit = new EventEmitter<any>();
+
 
   constructor(private http: Http) { }
 
-  getCourses(cours) {
-    this.http.get(`http://localhost:3000/student-cours/${cours}`).subscribe(data => {
+  getCourses(student) {
+    this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
       this.studentCourses = JSON.parse(data['_body']);
+      console.log(this.studentCourses);
+
     });
   }
 
-  getStudents(cours) {
-    this.http.get(`http://localhost:3000/courses-student/${cours}`).subscribe(data => {
+  getStudents(course) {
+    this.http.get(`http://localhost:3000/courses-student/${course}`).subscribe(data => {
       this.courseStudents = JSON.parse(data['_body']);
+      console.log(this.courseStudents);
     });
   }
 
@@ -35,5 +40,9 @@ export class InfoComponent implements OnInit {
   ngOnInit() {
     this.getCourses(this.viewData.data.id);
     this.getStudents(this.viewData.data.id);
+  }
+
+  openEditForm() {
+    this.onClickEdit.emit(this.viewData);
   }
 }

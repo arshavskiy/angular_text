@@ -1,8 +1,11 @@
 <div class="container">
   <app-nav></app-nav>
-  <app-courses (onCourseClicked)="showCourse($event)"></app-courses>
-  <app-students (onStudentClicked)="showStudent($event)"></app-students>
-  <app-info *ngIf="infoView" [viewData]="infoView"></app-info>
-  <app-editor-classes *ngIf="editor" [editor]="editor"></app-editor-classes>
+  <app-courses (onCourseClicked)="showCourse($event)" (onClickAddCourse)="openAddCourseForm()"></app-courses>
+  <app-students (onStudentClicked)="showStudent($event)" (onClickAddStudent)="openAddStudentForm()"></app-students>
+  <app-info *ngIf="infoView" [viewData]="infoView" (onClickEdit)="openEditform($event)"></app-info>
+  <app-add-student *ngIf="showAddStudentForm"></app-add-student>
+  <app-add-course *ngIf="showAddCourseForm"></app-add-course>
+  <app-edit-student *ngIf="showEditStudentForm" [data]="formData"></app-edit-student>
+  <app-edit-course *ngIf="showEditCourseForm" [data]="formData"></app-edit-course>
   <!-- <app-app-student-detail></app-app-student-detail> -->
 </div>

@@ -1,4 +1,8 @@
 <section *ngIf="students">
+  <div class="list-header">
+    <p>Students:</p>
+    <div class="add-btn" (click)="addNewStudent()">+</div>
+  </div>
   <div *ngFor="let student of students" class='student-container'>
     <div class='img-holder'>
       <img src='../../../assets/{{student.image}}'>

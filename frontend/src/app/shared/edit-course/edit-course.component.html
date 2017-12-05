@@ -1,0 +1,13 @@
+<section>
+  <div class="main_head">
+    <span>Edit Course</span>
+  </div>
+  <span class="under_line"></span>
+  <div>
+    <input type="text" [ngModel]="course.name">
+    <textarea name="" id="" cols="30" rows="10" [ngModel]="course.des"></textarea>
+    <input type="file" [ngModel]="course.image">
+    <img [src]="image" alt="" style="width:100px; height:auto;">
+    <button>Save</button>
+  </div>
+</section>

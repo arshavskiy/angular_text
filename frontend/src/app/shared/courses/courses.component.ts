@@ -8,6 +8,7 @@ import { Http } from '@angular/http';
 })
 export class CoursesComponent implements OnInit {
   @Output() onCourseClicked = new EventEmitter<any>();
+  @Output() onClickAddCourse = new EventEmitter<any>();
 
   private coursesTotal: number;
   private courses: Array<any>;
@@ -22,6 +23,10 @@ export class CoursesComponent implements OnInit {
 
   chooseCourse(cours) {
     this.onCourseClicked.emit(cours);
+  }
+
+  addNewCourse() {
+    this.onClickAddCourse.emit();
   }
 
 

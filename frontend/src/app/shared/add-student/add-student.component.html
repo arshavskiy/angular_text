@@ -1,0 +1,18 @@
+<section>
+  <div class="main_head">
+    <span>Add New Student</span>
+  </div>
+  <span class="under_line"></span>
+  <div>
+    <input type="text" [(ngModel)]="student.name">
+    <input type="text" [(ngModel)]="student.phone">
+    <input type="email" [(ngModel)]="student.email">
+    <input type="file" [(ngModel)]="student.image">
+    <div *ngFor="let course of courses">
+      <label>
+        <input type="checkbox" [value]="course.name" (change)="course.checked = $event.target.checked">{{course.name}}
+      </label>
+    </div>
+    <button (click)="createNewStudent()">Save</button>
+  </div>
+</section>

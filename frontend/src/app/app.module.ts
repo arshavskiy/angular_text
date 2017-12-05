@@ -22,7 +22,10 @@ import { AdminViewComponent } from './admin-view/admin-view.component';
 import { AdminsComponent } from './shared/admins/admins.component';
 import { InfoComponent } from './shared/info/info.component';
 import { AddComponentComponent } from './shared/add-component/add-component.component';
-import { EditorClassesComponent } from './shared/editor-classes/editor-classes.component';
+import { AddStudentComponent } from './shared/add-student/add-student.component';
+import { AddCourseComponent } from './shared/add-course/add-course.component';
+import { EditCourseComponent } from './shared/edit-course/edit-course.component';
+import { EditStudentComponent } from './shared/edit-student/edit-student.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { EditorClassesComponent } from './shared/editor-classes/editor-classes.c
     AdminsComponent,
     InfoComponent,
     AddComponentComponent,
-    EditorClassesComponent
+    AddStudentComponent,
+    AddCourseComponent,
+    EditCourseComponent,
+    EditStudentComponent
   ],
   imports: [
     BrowserModule,

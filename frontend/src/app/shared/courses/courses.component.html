@@ -1,6 +1,8 @@
-<app-add-component></app-add-component>
-
 <section *ngIf="courses">
+  <div class="list-header">
+    <p>Courses:</p>
+    <div class="add-btn" (click)="addNewCourse()">+</div>
+  </div>
   <div *ngFor="let cours of courses" class='courses-container'>
     <div class='img-holder'>
       <img src='../../../assets/{{cours.image}}'>
