@@ -36,6 +36,7 @@ app.get('/students', function (req, res, fields) {
         res.status(200).send(data);
     });
 });
+
 app.get('/admins', function (req, res, fields) {
     let sql = 'SELECT * FROM admins';
     con.query(sql, (err, data) => {
@@ -45,6 +46,41 @@ app.get('/admins', function (req, res, fields) {
     });
 });
 
+app.delete('/students/delete/:id', function (req, res, fields) {
+    let sql = 'DELETE FROM students WHERE students.id=?';
+    con.query(sql, [req.params.id], (err, data) => {
+        if (err) throw err;
+        console.log(`res : ${data}`);
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    });
+});
+
+app.post('/students/update/:id', function (req, res, fields) {
+    let sql = 'UPDATE students SET id=?, name=?, phone=?, email=? ';
+    con.query(sql, [req.params.id, req.params.name, req.params.phone, req.params.email], (err, data) => {
+        if (err) throw err;
+        console.log(`res : ${data}`);
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    });
+});
+
+app.post('/students/add', function (req, res, fields) {
+    let sql = 'INSERT INTO students SET ? ';
+    con.query(sql, [req.params.id, req.params.name, req.params.phone, req.params.email], (err, data) => {
+        if (err) throw err;
+        console.log(`res : ${data}`);
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    });
+});
+
+
+
+// TODO:
+//INSERT INTO `students` (`id`, `name`, `phone`, `email`, `image`) VALUES ('54', 'asdasd', '0586825135', 'asdasd@asd.com', 'asdasd.jpg');
+
 app.get('/courses', function (req, res, fields) {
     let sql = 'SELECT * FROM courses';
     con.query(sql, (err, data) => {
@@ -53,6 +89,7 @@ app.get('/courses', function (req, res, fields) {
         res.status(200).send(data);
     });
 });
+
 app.get('/admin/:id', function (req, res, fields) {
     let sql = 'select * from admins where id=?';
     con.query(sql, [req.params.id], (err, data) => {
@@ -62,6 +99,7 @@ app.get('/admin/:id', function (req, res, fields) {
         res.status(200).send(data);
     });
 });
+
 app.get('/student/:id', function (req, res, fields) {
     let sql = 'SELECT * FROM students WHERE id =?';
     con.query(sql, [req.params.id], (err, data) => {
@@ -71,6 +109,7 @@ app.get('/student/:id', function (req, res, fields) {
         res.status(200).send(data);
     });
 });
+
 app.get('/student-cours/:id', function (req, res, fields) {
     let sql = 'SELECT courses.name, courses.image FROM courses JOIN students_courses ON courses.id = students_courses.course_id WHERE student_id =?';
     con.query(sql, [req.params.id], (err, data) => {

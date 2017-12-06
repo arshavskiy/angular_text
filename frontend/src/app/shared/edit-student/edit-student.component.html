@@ -14,6 +14,7 @@
         <input type="checkbox" [value]="course.checked" (change)="course.checked = $event.target.checked">{{course.name}}
       </label>
     </div>
-    <button>Save</button>
+    <button (click)="editStudent()">Save</button>
+    <button (click)="deleteStudent()">Delete</button>
   </div>
 </section>

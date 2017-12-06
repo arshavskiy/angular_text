@@ -26,6 +26,10 @@ export class AddStudentComponent implements OnInit {
     const chosenCourses = this.courses.filter(course =>
       course.checked
     ).map((course => course.name));
+    console.log(this.student.name + chosenCourses);
+
+
+
   }
 
 }
