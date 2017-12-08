@@ -3,6 +3,7 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var md5 = require('md5');
 
 app.listen(3000);
 app.use(cors());
@@ -31,7 +32,6 @@ app.get('/students', function (req, res, fields) {
     // let sql = 'SELECT * FROM students join students_courses on students.id = students_courses.student_id';
     con.query(sql, (err, data) => {
         if (err) throw err;
-        console.log(`res : ${data}`);
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send(data);
     });
@@ -56,13 +56,12 @@ app.delete('/students/delete/:id', function (req, res, fields) {
     });
 });
 
-app.post('/students/update/:id', function (req, res, fields) {
-    let sql = 'UPDATE students SET id=?, name=?, phone=?, email=? ';
-    con.query(sql, [req.params.id, req.params.name, req.params.phone, req.params.email], (err, data) => {
+app.post('/student/update/:id', function (req, res, fields) {
+    let sql = 'UPDATE students SET name=?, phone=?, email=? WHERE id=? ';
+    con.query(sql, [req.body.student.name, req.body.student.phone, req.body.student.email, req.params.id], (err, data) => {
         if (err) throw err;
-        console.log(`res : ${data}`);
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).send(data);
+        res.status(200).send('ok');
     });
 });
 
@@ -75,8 +74,6 @@ app.post('/students/add', function (req, res, fields) {
         res.status(200).send(data);
     });
 });
-
-
 
 // TODO:
 //INSERT INTO `students` (`id`, `name`, `phone`, `email`, `image`) VALUES ('54', 'asdasd', '0586825135', 'asdasd@asd.com', 'asdasd.jpg');
@@ -133,4 +130,20 @@ app.get('/courses-student/:id', function (req, res, fields) {
 
 app.get('/', function (req, res) {
     res.send('hello world');
+});
+
+
+app.post('/login', function (req, res, fields) {
+    let sql = 'select * from admins where name = ? and password = ?';
+    console.log('login!!!', req.body);
+    let md5pass = md5(req.body.password);
+    con.query(sql, [req.body.name, md5pass], (err, data) => {
+        if (err) throw err;
+        if (data.length > 0) {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).send('ok');
+        } else {
+            res.status(403).send('bad');            
+        }
+    });
 });
