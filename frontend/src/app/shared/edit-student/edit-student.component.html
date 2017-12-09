@@ -1,12 +1,12 @@
 <section>
   <div class="main_head">
-    <span>Add New Student</span>
+    <h3>Edit a Student</h3>
   </div>
   <span class="under_line"></span>
-  <div>
-    <input type="text" [ngModel]="student.name">
-    <input type="text" [ngModel]="student.phone">
-    <input type="email" [ngModel]="student.email">
+  <div id="form">
+    <input type="text" [(ngModel)]="student.name">
+    <input type="text" [(ngModel)]="student.phone">
+    <input type="email" [(ngModel)]="student.email">
     <input type="file" [ngModel]="student.image">
     <img [src]="image" alt="" style="width:100px; height:auto;">
     <div *ngFor="let course of courses">

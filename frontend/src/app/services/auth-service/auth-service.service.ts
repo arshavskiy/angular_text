@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class AuthService {
+  
   currentUser: any;
-  constructor() {
+  public user: any;
+  public name: any;
+  private password:  Array<any>;
+
+  constructor(    
+    private http: Http,
+  ) {
   }
 
-  login(user) {
+  login(user, onSuccess) {
 
-    // http post request to server 
-    if (user.name === 'pavel' && user.password === '12345') {
-      console.log('logged in');
-      // api user.
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUser = localStorage.getItem('currentUser');
-      return this.currentUser;
-    } else {
-      this.currentUser = '';
-      console.log('not sababa');
-    }
+    // do query to route login
+    this.http.post('http://localhost:3000/login', {name: user.name, password: user.password}).subscribe(data => {
+      if ('ok' == data['_body']) {
+          console.log('logged in');
+          // api user.
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUser = localStorage.getItem('currentUser');
+          onSuccess();
+      } else {
+        this.currentUser = null;
+        console.log('not sababa');
+      }
+    });
   }
 
 }
