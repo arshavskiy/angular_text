@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ElementRef, Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
-
 
 @Component({
   selector: 'app-add-student',
@@ -8,6 +7,8 @@ import { Http } from '@angular/http';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
+  @Input() data: any;
+
   student: any;
   courses: [any];
   studentCourses: [any];
@@ -23,13 +24,14 @@ export class AddStudentComponent implements OnInit {
   }
 
   createNewStudent() {
-    const chosenCourses = this.courses.filter(course =>
-      course.checked
-    ).map((course => course.name));
-    console.log(this.student.name + chosenCourses);
-
-
-
+    console.log(this.student);
+    this.student.image = 'fileName';
+    this.http.post(`http://localhost:3000/student/`, { student: this.student }).subscribe(data => {
+      if ('ok' == data['_body']) {
+        console.log('saved');
+      } else {
+        console.log('not sababa');
+      }
+    });
   }
-
 }
