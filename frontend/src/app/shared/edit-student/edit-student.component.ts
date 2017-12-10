@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { forEach } from '@angular/router/src/utils/collection';
+import { error } from 'util';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class EditStudentComponent implements OnInit {
   studentCourses: any;
   courses: any;
   constructor(private http: Http) {
-    
+
   }
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class EditStudentComponent implements OnInit {
   }
 
   editStudent() {
-    this.http.post(`http://localhost:3000/student/update/${this.student.id}`, {student: this.student}).subscribe(data => {
+    this.http.post(`http://localhost:3000/student/update/${this.student.id}`, { student: this.student }).subscribe(data => {
       if ('ok' == data['_body']) {
         console.log('saved');
       } else {
@@ -46,11 +47,12 @@ export class EditStudentComponent implements OnInit {
     });
   }
 
-  deleteStudent(student) {
-    this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
-      this.studentCourses = JSON.parse(data['_body']);
-      console.log(this.studentCourses);
-    });
+  deleteStudent() {
+    this.http.delete(`http://localhost:3000/student/delete/${this.student.id}`)
+      .subscribe(
+      (response) => console.log(response['_body']),
+      (error) => console.log(error)
+      );
   }
 
 }

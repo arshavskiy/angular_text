@@ -4,10 +4,10 @@
   </div>
   <span class="under_line"></span>
   <div id="form">
-    <input type="text" [(ngModel)]="student.name">
-    <input type="text" [(ngModel)]="student.phone">
-    <input type="email" [(ngModel)]="student.email">
-    <input type="file" [(ngModel)]="student.image">
+    <input type="text" placeholder="Name" [(ngModel)]="student.name">
+    <input type="text" placeholder="Phone" [(ngModel)]="student.phone">
+    <input type="email" placeholder="Email" [(ngModel)]="student.email">
+    <input type="file" id="fileName" placeholder="file name" [(ngModel)]="student.image">
     <div *ngFor="let course of courses">
       <label>
         <input type="checkbox" [value]="course.name" (change)="course.checked = $event.target.checked">{{course.name}}

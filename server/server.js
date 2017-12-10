@@ -1,19 +1,23 @@
 var express = require('express');
-var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
+
+var multer = require('multer');
+var upload = multer({
+    dest: 'uploads/'
+});
+
+var app = express();
 var mysql = require('mysql');
 var md5 = require('md5');
 
 app.listen(3000);
+
 app.use(cors());
-app.use(bodyParser.json()); // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
-    extended: true
-}));
-
-
-// respond with "hello world" when a GET request is made to the homepage
+app.use(bodyParser.urlencoded({
+    extended: false
+})); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -46,17 +50,17 @@ app.get('/admins', function (req, res, fields) {
     });
 });
 
-app.delete('/students/delete/:id', function (req, res, fields) {
+app.delete('/student/delete/:id', function (req, res, fields) {
     let sql = 'DELETE FROM students WHERE students.id=?';
     con.query(sql, [req.params.id], (err, data) => {
         if (err) throw err;
-        console.log(`res : ${data}`);
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).send(data);
+        res.status(200).send('deleted');
     });
 });
 
 app.post('/student/update/:id', function (req, res, fields) {
+
     let sql = 'UPDATE students SET name=?, phone=?, email=? WHERE id=? ';
     con.query(sql, [req.body.student.name, req.body.student.phone, req.body.student.email, req.params.id], (err, data) => {
         if (err) throw err;
@@ -65,13 +69,24 @@ app.post('/student/update/:id', function (req, res, fields) {
     });
 });
 
-app.post('/students/add', function (req, res, fields) {
+app.post('/student/', function (req, res, fields) {
+    var input = JSON.parse(JSON.stringify(req.body));
+    // console.log('the req.body is:');
+    // JSON.stringify(input.student);
+    // console.log(input.student);
+
+    var data = {
+        name: input.student.name,
+        phone: input.student.phone,
+        email: input.student.email,
+        image: 'input.student.image'
+    };
+
     let sql = 'INSERT INTO students SET ? ';
-    con.query(sql, [req.params.id, req.params.name, req.params.phone, req.params.email], (err, data) => {
+    con.query(sql, [data], (err, data) => {
         if (err) throw err;
-        console.log(`res : ${data}`);
         res.setHeader('Content-Type', 'application/json');
-        res.status(200).send(data);
+        res.status(200).send('ok');
     });
 });
 
@@ -143,7 +158,7 @@ app.post('/login', function (req, res, fields) {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).send('ok');
         } else {
-            res.status(403).send('bad');            
+            res.status(403).send('bad');
         }
     });
 });
