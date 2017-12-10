@@ -32,14 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   login(user) {
-    const currentUser = JSON.parse(this.authService.login(this.user));
-    console.log(currentUser);
-    // currentUser.roll
-    if (currentUser !== '') {
+    this.authService.login(this.user, () => {
+      console.log('navigate to school view');
       this.router.navigate(['school-view']);
-      // this.router.navigate(['school-view']);
-      // this.router.navigate(['admin-view']);
-    }
+    });
   }
 
 }

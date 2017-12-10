@@ -14,11 +14,13 @@ export class EditStudentComponent implements OnInit {
   image: any;
   studentCourses: any;
   courses: any;
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    
+  }
 
   ngOnInit() {
     if (!this.data || this.data == undefined || this.data == {}) {
-      this.student = {}
+      this.student = {};
     } else {
       this.student = this.data;
       this.image = `../../assets/${this.student.image}`
@@ -28,6 +30,23 @@ export class EditStudentComponent implements OnInit {
   }
 
   getCourses(student) {
+    this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
+      this.studentCourses = JSON.parse(data['_body']);
+      console.log(this.studentCourses);
+    });
+  }
+
+  editStudent() {
+    this.http.post(`http://localhost:3000/student/update/${this.student.id}`, {student: this.student}).subscribe(data => {
+      if ('ok' == data['_body']) {
+        console.log('saved');
+      } else {
+        console.log('not sababa');
+      }
+    });
+  }
+
+  deleteStudent(student) {
     this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
       this.studentCourses = JSON.parse(data['_body']);
       console.log(this.studentCourses);
