@@ -1,23 +1,57 @@
 var express = require('express');
+var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 
-var multer = require('multer');
-var upload = multer({
-    dest: 'uploads/'
-});
+var router = express.Router();
 
-var app = express();
+var multer = require('multer');
 var mysql = require('mysql');
 var md5 = require('md5');
 
 app.listen(3000);
-
+app.use(express.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 1024102420,
+    type: 'application/x-www-form-urlencoding'
+}));
+app.use(express.json({
+    limit: 1024102420,
+    type: 'application/json'
+}));
+// app.use(express.static('../client'));
 app.use(cors());
-app.use(bodyParser.urlencoded({
-    extended: false
-})); // for parsing application/x-www-form-urlencoded
-app.use(bodyParser.json()); // for parsing application/json
+
+
+var storage = multer.diskStorage({ //multers disk storage settings
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+});
+var upload = multer({ //multer settings
+    storage: storage
+}).single('file');
+
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         var path = './uploads' // Make sure this path exists 
+//         cb(null, path)
+//     }
+// })
+// var upload = multer({
+//     storage: storage
+// })
+
+// router.post('/upload', upload.single('file'), function (req, res) {
+//     res.status(204).end()
+// })
+
+// module.exports = router;
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -67,6 +101,27 @@ app.post('/student/update/:id', function (req, res, fields) {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send('ok');
     });
+});
+
+app.post('/upload', function (req, res) {
+
+    console.log(JSON.parse(JSON.stringify(req.body.name)));
+
+    upload(req, res, function (err) {
+        if (err) {
+            res.json({
+                error_code: 1,
+                err_desc: err
+            });
+            return;
+        }
+        res.json({
+            error_code: 0,
+            err_desc: null
+        });
+        // res.status(204).end();
+    });
+
 });
 
 app.post('/student/', function (req, res, fields) {
