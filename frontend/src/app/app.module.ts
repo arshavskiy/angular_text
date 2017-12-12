@@ -1,11 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AuthService } from "./services/auth-service/auth-service.service";
-
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -50,6 +49,7 @@ import { EditStudentComponent } from './shared/edit-student/edit-student.compone
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(AppRoutes)
   ],
