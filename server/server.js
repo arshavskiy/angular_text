@@ -56,6 +56,10 @@ app.listen(PORT, function () {
     console.log('Working on port ' + PORT);
 });
 
+app.get('/', function (req, res) {
+    res.send('hello world');
+});
+
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -67,6 +71,8 @@ con.connect(err => {
     if (err) throw err;
     console.log('connected');
 });
+
+
 
 app.post('/upload', upload.single('file'), function (req, res, next) {
     console.log(req.file, req.body);
@@ -87,7 +93,6 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
     });
   
 });
-
 
 app.post('/student/', function (req, res, fields) {
     var input = JSON.parse(JSON.stringify(req.body));
@@ -146,30 +151,6 @@ app.post('/student/update/:id', function (req, res, fields) {
     });
 });
 
-app.post('/student/', function (req, res, fields) {
-    var input = JSON.parse(JSON.stringify(req.body));
-    // console.log('the req.body is:');
-    // JSON.stringify(input.student);
-    // console.log(input.student);
-
-    var data = {
-        name: input.student.name,
-        phone: input.student.phone,
-        email: input.student.email,
-        image: 'input.student.image'
-    };
-
-    let sql = 'INSERT INTO students SET ? ';
-    con.query(sql, [data], (err, data) => {
-        if (err) throw err;
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).send('ok');
-    });
-});
-
-// TODO:
-//INSERT INTO `students` (`id`, `name`, `phone`, `email`, `image`) VALUES ('54', 'asdasd', '0586825135', 'asdasd@asd.com', 'asdasd.jpg');
-
 app.get('/courses', function (req, res, fields) {
     let sql = 'SELECT * FROM courses';
     con.query(sql, (err, data) => {
@@ -217,11 +198,6 @@ app.get('/courses-student/:id', function (req, res, fields) {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send(data);
     });
-});
-
-
-app.get('/', function (req, res) {
-    res.send('hello world');
 });
 
 
