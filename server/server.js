@@ -8,50 +8,70 @@ var router = express.Router();
 var multer = require('multer');
 var mysql = require('mysql');
 var md5 = require('md5');
+var fs = require('fs');
 
-app.listen(3000);
-app.use(express.urlencoded({
-    limit: "50mb",
-    extended: true,
-    parameterLimit: 1024102420,
-    type: 'application/x-www-form-urlencoding'
-}));
-app.use(express.json({
-    limit: 1024102420,
-    type: 'application/json'
-}));
-// app.use(express.static('../client'));
-app.use(cors());
+var DIR = './uploads/';
 
-
-var storage = multer.diskStorage({ //multers disk storage settings
+var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/')
+      cb(null, DIR)
     },
     filename: function (req, file, cb) {
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+        var type = file.mimetype.split('/')
+        if(type && type.length > 1){
+            type = '.'+type[1];
+        }
+        else{
+            type = '';
+        }
+        cb(null, file.fieldname + '-' + Date.now()+type)
     }
+  });
+  
+
+var upload = multer({
+   // dest: DIR,
+   storage:storage
 });
-var upload = multer({ //multer settings
-    storage: storage
-}).single('file');
 
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         var path = './uploads' // Make sure this path exists 
-//         cb(null, path)
-//     }
-// })
-// var upload = multer({
-//     storage: storage
-// })
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true
+}));
 
-// router.post('/upload', upload.single('file'), function (req, res) {
-//     res.status(204).end()
-// })
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200'); // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // Set to true if you need the website to include cookies in the requests sent   // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true); // Pass to next layer of middleware
+    next();
+});
 
-// module.exports = router;
+// app.use(multer({
+//         dest: DIR,
+//         rename: function (fieldname, filename) {
+//             return filename + Date.now();
+//         },
+//         onFileUploadStart: function (file) {
+//             console.log(file.originalname + ' is starting ...');
+//         },
+//         onFileUploadComplete: function (file) {
+//             console.log(file.fieldname + ' uploaded to  ' + file.path);
+//         }
+//     })
+//     .single('singleInputFileName')
+// );
+
+
+
+var PORT = process.env.PORT || 3000;
+app.listen(PORT, function () {
+    console.log('Working on port ' + PORT);
+});
+
 
 var con = mysql.createConnection({
     host: 'localhost',
@@ -59,11 +79,18 @@ var con = mysql.createConnection({
     password: '',
     database: 'theschool_db'
 });
-
 con.connect(err => {
     if (err) throw err;
     console.log('connected');
 });
+
+
+app.post('/upload', upload.single('file'), function (req, res, next) {
+    console.log(res.file);
+    //res.setHeader('Content-Type', 'application/json');
+    res.status(200).send('ok');
+});
+
 
 app.get('/students', function (req, res, fields) {
     let sql = 'SELECT * FROM students';
@@ -101,27 +128,6 @@ app.post('/student/update/:id', function (req, res, fields) {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send('ok');
     });
-});
-
-app.post('/upload', function (req, res) {
-
-    console.log(JSON.parse(JSON.stringify(req.body.name)));
-
-    upload(req, res, function (err) {
-        if (err) {
-            res.json({
-                error_code: 1,
-                err_desc: err
-            });
-            return;
-        }
-        res.json({
-            error_code: 0,
-            err_desc: null
-        });
-        // res.status(204).end();
-    });
-
 });
 
 app.post('/student/', function (req, res, fields) {

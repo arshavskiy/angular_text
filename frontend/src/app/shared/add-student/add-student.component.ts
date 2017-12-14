@@ -2,7 +2,7 @@ import { OnInit, Input } from '@angular/core';
 import { Http } from '@angular/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-
+import { FileUploader } from 'ng2-file-upload';
 
 
 @Component({
@@ -14,6 +14,8 @@ export class AddStudentComponent implements OnInit {
   @Input() data: any;
   @ViewChild('fileInput') fileInput: ElementRef;
 
+  public uploader:FileUploader = new FileUploader({url: 'http://localhost:3000/upload'});
+
   form: FormGroup;
   loading: boolean = false;
 
@@ -24,6 +26,11 @@ export class AddStudentComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: Http) {
     this.createForm();
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      var responsePath = JSON.parse(response);
+      console.log(response, responsePath);// the url will be in the response
+      };
   }
 
   ngOnInit() {
