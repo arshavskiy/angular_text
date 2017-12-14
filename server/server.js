@@ -50,22 +50,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use(multer({
-//         dest: DIR,
-//         rename: function (fieldname, filename) {
-//             return filename + Date.now();
-//         },
-//         onFileUploadStart: function (file) {
-//             console.log(file.originalname + ' is starting ...');
-//         },
-//         onFileUploadComplete: function (file) {
-//             console.log(file.fieldname + ' uploaded to  ' + file.path);
-//         }
-//     })
-//     .single('singleInputFileName')
-// );
-
-
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
@@ -84,11 +68,43 @@ con.connect(err => {
     console.log('connected');
 });
 
-
 app.post('/upload', upload.single('file'), function (req, res, next) {
-    console.log(res.file);
-    //res.setHeader('Content-Type', 'application/json');
-    res.status(200).send('ok');
+    console.log(req.file, req.body);
+
+    JSON.stringify(req.body);
+    var data = {
+        name: req.body.name,
+        phone: req.body.phone,
+        email: req.body.email,
+        image: req.file.filename
+    };
+
+    let sql = 'INSERT INTO students SET ? ';
+    con.query(sql, [data], (err, data) => {
+        if (err) throw err;
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+    });
+  
+});
+
+
+app.post('/student/', function (req, res, fields) {
+    var input = JSON.parse(JSON.stringify(req.body));
+    JSON.stringify(input.student);
+    var data = {
+        name: input.student.name,
+        phone: input.student.phone,
+        email: input.student.email
+        // image: 'input.student.image'
+    };
+
+    let sql = 'INSERT INTO students SET ? ';
+    con.query(sql, [data], (err, data) => {
+        if (err) throw err;
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send('ok');
+    });
 });
 
 

@@ -7,7 +7,7 @@
     <input type="text" placeholder="Name" [(ngModel)]="student.name">
     <input type="text" placeholder="Phone" [(ngModel)]="student.phone">
     <input type="email" placeholder="Email" [(ngModel)]="student.email">
-    <input type="file" id="fileName" placeholder="file name" [(ngModel)]="student.image">
+    <input type="file" ng2FileSelect [uploader]="uploader" />
     <div *ngFor="let course of courses">
       <label>
         <input type="checkbox" [value]="course.name" (change)="course.checked = $event.target.checked">{{course.name}}
@@ -15,25 +15,5 @@
     </div>
     <button (click)="createNewStudent()">Save</button>
   </div>
-
-  <form [formGroup]="form">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" placeholder="Bob" formControlName="name">
-    </div>
-    <div class="form-group">
-      <label for="avatar">Avatar</label>
-      <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-      <button type="button" class="btn btn-sm btn-default" (click)="clearFile()">clear file</button>
-    </div>
-    <button type="submit" [disabled]="form.invalid || loading" class="btn btn-success">Submit
-      <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i>
-    </button>
-
-    <br>
-    <input type="file" ng2FileSelect [uploader]="uploader" />
-    <button (click)="uploader.uploadAll();">Submit</button>
-    <br>
-  </form>
 
 </section>

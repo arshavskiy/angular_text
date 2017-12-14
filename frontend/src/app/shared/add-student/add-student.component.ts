@@ -25,12 +25,16 @@ export class AddStudentComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private http: Http) {
-    this.createForm();
+    // this.createForm();
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       var responsePath = JSON.parse(response);
-      console.log(response, responsePath);// the url will be in the response
-      };
+      this.uploader.clearQueue();
+    };
+
+    this.uploader.onBeforeUploadItem = (fileItem: any) => {
+      this.uploader.options.additionalParameter =  this.student
+    };
   }
 
   ngOnInit() {
@@ -43,8 +47,10 @@ export class AddStudentComponent implements OnInit {
   }
 
   createNewStudent() {
-    console.log(this.student);
-    this.student.image = 'fileName';
+    if (this.uploader.queue.length > 0 ){
+      this.uploader.uploadAll();
+    } 
+    else {
     this.http.post(`http://localhost:3000/student/`, { student: this.student }).subscribe(data => {
       if ('ok' == data['_body']) {
         console.log('saved');
@@ -52,49 +58,50 @@ export class AddStudentComponent implements OnInit {
         console.log('not sababa');
       }
     });
-  }
-
-
-  createForm() {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      avatar: null
-    });
-  }
-
-  onFileChange(event) {
-    let reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      let file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.form.get('avatar').setValue({
-          filename: file.name,
-          filetype: file.type,
-          value: reader.result.split(',')[1]
-        })
-      };
     }
   }
 
-  onSubmit() {
-    const formModel = this.form.value;
-    this.loading = true;
-    this.http.post(`http://localhost:3000/upload`, formModel).subscribe(data => {
-      if ('ok' == data['_body']) {
-        console.log('saved');
-      } else {
-        console.log('not sababa');
-      }
-    });
-    console.log(formModel);
-    this.loading = false;
-  }
 
-  clearFile() {
-    this.form.get('avatar').setValue(null);
-    this.fileInput.nativeElement.value = '';
-  }
+  // createForm() {
+  //   this.form = this.fb.group({
+  //     name: ['', Validators.required],
+  //     avatar: null
+  //   });
+  // }
+
+  // onFileChange(event) {
+  //   let reader = new FileReader();
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     let file = event.target.files[0];
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       this.form.get('avatar').setValue({
+  //         filename: file.name,
+  //         filetype: file.type,
+  //         value: reader.result.split(',')[1]
+  //       })
+  //     };
+  //   }
+  // }
+
+  // onSubmit() {
+  //   const formModel = this.form.value;
+  //   this.loading = true;
+  //   this.http.post(`http://localhost:3000/upload`, formModel).subscribe(data => {
+  //     if ('ok' == data['_body']) {
+  //       console.log('saved');
+  //     } else {
+  //       console.log('not sababa');
+  //     }
+  //   });
+  //   console.log(formModel);
+  //   this.loading = false;
+  // }
+
+  // clearFile() {
+  //   this.form.get('avatar').setValue(null);
+  //   this.fileInput.nativeElement.value = '';
+  // }
 }
 
 
