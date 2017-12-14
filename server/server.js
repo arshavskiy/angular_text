@@ -10,7 +10,7 @@ var mysql = require('mysql');
 var md5 = require('md5');
 var fs = require('fs');
 
-var DIR = './uploads/';
+var DIR = '../frontend/src/assets/';
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {

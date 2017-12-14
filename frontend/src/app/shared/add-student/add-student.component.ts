@@ -60,48 +60,6 @@ export class AddStudentComponent implements OnInit {
     });
     }
   }
-
-
-  // createForm() {
-  //   this.form = this.fb.group({
-  //     name: ['', Validators.required],
-  //     avatar: null
-  //   });
-  // }
-
-  // onFileChange(event) {
-  //   let reader = new FileReader();
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     let file = event.target.files[0];
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => {
-  //       this.form.get('avatar').setValue({
-  //         filename: file.name,
-  //         filetype: file.type,
-  //         value: reader.result.split(',')[1]
-  //       })
-  //     };
-  //   }
-  // }
-
-  // onSubmit() {
-  //   const formModel = this.form.value;
-  //   this.loading = true;
-  //   this.http.post(`http://localhost:3000/upload`, formModel).subscribe(data => {
-  //     if ('ok' == data['_body']) {
-  //       console.log('saved');
-  //     } else {
-  //       console.log('not sababa');
-  //     }
-  //   });
-  //   console.log(formModel);
-  //   this.loading = false;
-  // }
-
-  // clearFile() {
-  //   this.form.get('avatar').setValue(null);
-  //   this.fileInput.nativeElement.value = '';
-  // }
 }
 
 
