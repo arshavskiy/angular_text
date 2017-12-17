@@ -24,7 +24,7 @@ export class EditStudentComponent implements OnInit {
       this.student = {};
     } else {
       this.student = this.data;
-      this.image = `../../assets/${this.student.image}`
+      this.image = `http://localhost:3000/upload/${this.student.image}`
       // this.student.image = null;
     }
     this.getCourses(this.student.id);

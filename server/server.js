@@ -10,7 +10,9 @@ var mysql = require('mysql');
 var md5 = require('md5');
 var fs = require('fs');
 
-var DIR = '../frontend/src/assets/';
+var DIR = 'upload';
+
+app.use('/upload', express.static('upload'))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -24,7 +26,8 @@ var storage = multer.diskStorage({
         else{
             type = '';
         }
-        cb(null, file.fieldname + '-' + Date.now()+type)
+        // cb(null, file.fieldname + '-' + Date.now()+type);
+        cb(null, file.fieldname + type);
     }
   });
   
