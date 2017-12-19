@@ -15,17 +15,17 @@
 </section>
 
 <section class="allAdmins" *ngIf="allAdmins">
-  <div class='box' ng-repeat="let admin of allAdmins">
+  <div *ngFor="let all of allAdmins" class='box'>
     <div class='text-holder'>
       <span>
-        <strong>{{ admin.name }}</strong> (Id:{{admin.id}})
+        <strong>{{ all.name }}</strong> (Id:{{all.id}})
       </span>
       <small class="email">
-        {{ admin.email }}
+        {{ all.email }}
       </small>
     </div>
     <div class='img-holder'>
-      <img src='http://localhost:3000/upload/{{admin.image}}'>
+      <img src='http://localhost:3000/upload/{{all.image}}'>
     </div>
   </div>
 </section>
