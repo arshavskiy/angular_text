@@ -8,14 +8,22 @@ import { Http } from '@angular/http';
 })
 export class AdminsComponent implements OnInit {
 
-  private admins: Array<any>;
+  private admins: any;
+  private admin: any;
+  private loginUser: any;
   constructor(private http: Http) { }
 
   ngOnInit() {
-    // this.userName = 'David';
-    this.http.get('http://localhost:3000/admins').subscribe(data => {
+
+    this.loginUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(this.loginUser.name);
+    this.http.get(`http://localhost:3000/admin/${this.loginUser.name}`).subscribe(data => {
       this.admins = JSON.parse(data['_body']);
+      this.admin = this.admins[0];
+      console.log(this.admin.name)
+
     });
+
   }
 
 }

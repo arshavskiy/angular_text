@@ -16,25 +16,24 @@ app.use('/upload', express.static('upload'))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, DIR)
+        cb(null, DIR)
     },
     filename: function (req, file, cb) {
         var type = file.mimetype.split('/')
-        if(type && type.length > 1){
-            type = '.'+type[1];
-        }
-        else{
+        if (type && type.length > 1) {
+            type = '.' + type[1];
+        } else {
             type = '';
         }
         // cb(null, file.fieldname + '-' + Date.now()+type);
         cb(null, file.fieldname + type);
     }
-  });
-  
+});
+
 
 var upload = multer({
-   // dest: DIR,
-   storage:storage
+    // dest: DIR,
+    storage: storage
 });
 
 app.use(bodyParser.json({
@@ -94,7 +93,7 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send(data);
     });
-  
+
 });
 
 app.post('/student/', function (req, res, fields) {
@@ -163,9 +162,10 @@ app.get('/courses', function (req, res, fields) {
     });
 });
 
-app.get('/admin/:id', function (req, res, fields) {
-    let sql = 'select * from admins where id=?';
-    con.query(sql, [req.params.id], (err, data) => {
+app.get('/admin/:name', function (req, res, fields) {
+    let sql = `SELECT * FROM admins WHERE name=?`;
+    console.log(req.params.name);
+    con.query(sql, [req.params.name], (err, data) => {
         if (err) throw err;
         console.log(`res : ${data}`);
         res.setHeader('Content-Type', 'application/json');
