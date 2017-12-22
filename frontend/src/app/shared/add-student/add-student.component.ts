@@ -25,7 +25,6 @@ export class AddStudentComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private http: Http) {
-    // this.createForm();
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       var responsePath = JSON.parse(response);
@@ -49,7 +48,7 @@ export class AddStudentComponent implements OnInit {
   createNewStudent() {
     if (this.uploader.queue.length > 0 ){
       this.uploader.uploadAll();
-    } 
+    }
     else {
     this.http.post(`http://localhost:3000/student/`, { student: this.student }).subscribe(data => {
       if ('ok' == data['_body']) {

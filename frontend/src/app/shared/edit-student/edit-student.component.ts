@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ElementRef, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { forEach } from '@angular/router/src/utils/collection';
 import { error } from 'util';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FileUploader } from 'ng2-file-upload';
+
 
 
 @Component({
@@ -11,12 +15,25 @@ import { error } from 'util';
 })
 export class EditStudentComponent implements OnInit {
   @Input() data: any;
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  public uploader:FileUploader = new FileUploader({url: 'http://localhost:3000/upload'});
+
   student: any;
   image: any;
   studentCourses: any;
   courses: any;
-  constructor(private http: Http) {
 
+  constructor(private fb: FormBuilder, private http: Http) {
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      var responsePath = JSON.parse(response);
+      this.uploader.clearQueue();
+    };
+
+    this.uploader.onBeforeUploadItem = (fileItem: any) => {
+      this.uploader.options.additionalParameter =  this.student
+    };
   }
 
   ngOnInit() {
@@ -38,7 +55,12 @@ export class EditStudentComponent implements OnInit {
   }
 
   editStudent() {
+    if (this.uploader.queue.length > 0 ){
+      this.uploader.uploadAll();
+    }
+
     this.http.post(`http://localhost:3000/student/update/${this.student.id}`, { student: this.student }).subscribe(data => {
+      console.log(this.student.id);
       if ('ok' == data['_body']) {
         console.log('saved');
       } else {

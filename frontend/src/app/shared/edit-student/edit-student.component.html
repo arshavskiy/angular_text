@@ -7,11 +7,11 @@
     <input type="text" [(ngModel)]="student.name">
     <input type="text" [(ngModel)]="student.phone">
     <input type="email" [(ngModel)]="student.email">
-    <input type="file" [ngModel]="student.image">
-    <img [src]="image" alt="" style="width:100px; height:auto;">
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+    <img [src]="image">
     <div *ngFor="let course of courses">
       <label>
-        <input type="checkbox" [value]="course.checked" (change)="course.checked = $event.target.checked">{{course.name}}
+        <input type="checkbox" [value]="course.name" (change)="course.checked = $event.target.checked">{{course.name}}
       </label>
     </div>
     <button (click)="editStudent()">Save</button>
