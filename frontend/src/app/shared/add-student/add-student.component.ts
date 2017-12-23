@@ -50,7 +50,8 @@ export class AddStudentComponent implements OnInit {
       this.uploader.uploadAll();
     }
     else {
-    this.http.post(`http://localhost:3000/student/`, { student: this.student }).subscribe(data => {
+      console.log(this.student)
+      this.http.post(`http://localhost:3000/student/`, { student: this.student }).subscribe(data => {
       if ('ok' == data['_body']) {
         console.log('saved');
       } else {

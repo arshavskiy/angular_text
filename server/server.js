@@ -25,8 +25,8 @@ var storage = multer.diskStorage({
         } else {
             type = '';
         }
-        // cb(null, file.fieldname + '-' + Date.now()+type);
-        cb(null, file.fieldname + type);
+        cb(null, file.fieldname + '-' + Date.now()+type);
+        // cb(null, file.fieldname + type);
     }
 });
 
@@ -78,7 +78,6 @@ con.connect(err => {
 
 app.post('/upload', upload.single('file'), function (req, res, next) {
     console.log(req.file, req.body);
-
     JSON.stringify(req.body);
     var data = {
         name: req.body.name,
@@ -98,14 +97,18 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
 });
 
 app.post('/student/', function (req, res, fields) {
-    var input = JSON.parse(JSON.stringify(req.body));
-    JSON.stringify(input.student);
+
+    console.log('req.body:');
+    console.log(req.body);
+
     var data = {
-        name: input.student.name,
-        phone: input.student.phone,
-        email: input.student.email
-        // image: 'input.student.image'
-    };
+            name: req.body.student.name,
+            phone: req.body.student.phone,
+            email: req.body.student.email,
+        };
+
+    console.log('data:');
+    console.log(data);
 
     let sql = 'INSERT INTO students SET ? ';
     con.query(sql, [data], (err, data) => {

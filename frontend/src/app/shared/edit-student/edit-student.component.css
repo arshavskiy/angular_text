@@ -3,3 +3,7 @@ section {}
 #form input {
   display: block;
 }
+
+img {
+  height:100px;
+}

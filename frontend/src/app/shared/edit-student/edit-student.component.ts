@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
-import { forEach } from '@angular/router/src/utils/collection';
 import { error } from 'util';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 import { FileUploader } from 'ng2-file-upload';
 
 
@@ -68,8 +67,7 @@ export class EditStudentComponent implements OnInit {
       }
     });
   }
-
-  deleteStudent() {
+deleteStudent() {
     this.http.delete(`http://localhost:3000/student/delete/${this.student.id}`)
       .subscribe(
       (response) => console.log(response['_body']),
