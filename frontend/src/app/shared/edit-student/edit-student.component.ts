@@ -43,13 +43,22 @@ export class EditStudentComponent implements OnInit {
       this.image = `http://localhost:3000/upload/${this.student.image}`
       // this.student.image = null;
     }
-    this.getCourses(this.student.id);
+    this.getAllCourses(this.student.id);
+    this.getCourses();
   }
 
-  getCourses(student) {
+  getAllCourses(student) {
     this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
       this.studentCourses = JSON.parse(data['_body']);
       console.log(this.studentCourses);
+    });
+  }
+
+  getCourses() {
+    // this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {}
+    this.http.get('http://localhost:3000/courses').subscribe(data => {
+      this.courses  = JSON.parse(data['_body']);
+      console.log(this.courses);
     });
   }
 
