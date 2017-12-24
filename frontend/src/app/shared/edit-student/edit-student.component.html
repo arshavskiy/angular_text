@@ -13,7 +13,9 @@
     <img [src]="image">
     <div class="holder">
       <label *ngFor="let course of courses">
-        <input type="checkbox" [value]="course.name" (change)="course.checked = $event.target.checked">{{course.name}}
+        <input type="checkbox"
+               [value]="course.name"
+               (change)="course.checked = $event.target.checked">{{course.name}}
       </label>
     </div>
     <button (click)="editStudent()">Save</button>
