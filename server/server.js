@@ -102,10 +102,10 @@ app.post('/student/', function (req, res, fields) {
     console.log(req.body);
 
     var data = {
-            name: req.body.student.name,
-            phone: req.body.student.phone,
-            email: req.body.student.email,
-        };
+        name: req.body.student.name,
+        phone: req.body.student.phone,
+        email: req.body.student.email,
+    };
 
     console.log('data:');
     console.log(data);
