@@ -1,1 +1,1 @@
-manager - Pavel - asd /md5
+login : Pavel password: asd(md5 hashed)
