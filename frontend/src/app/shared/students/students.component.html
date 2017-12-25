@@ -5,7 +5,7 @@
   </div>
   <div *ngFor="let student of students" class='student-container'>
     <div class='img-holder'>
-      <img src='../../../assets/{{student.image}}'>
+      <img *ngIf="student.image" src='http://localhost:3000/upload/{{student.image}}'>
     </div>
     <div class='text-holder'>
       <div (click)="chooseStudent(student)">

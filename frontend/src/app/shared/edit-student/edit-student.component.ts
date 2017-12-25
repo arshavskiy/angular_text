@@ -1,7 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ElementRef, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
-import { forEach } from '@angular/router/src/utils/collection';
 import { error } from 'util';
+import { FormBuilder } from "@angular/forms";
+import { FileUploader } from 'ng2-file-upload';
+
 
 
 @Component({
@@ -11,12 +14,25 @@ import { error } from 'util';
 })
 export class EditStudentComponent implements OnInit {
   @Input() data: any;
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  public uploader:FileUploader = new FileUploader({url: 'http://localhost:3000/upload'});
+
   student: any;
   image: any;
   studentCourses: any;
   courses: any;
-  constructor(private http: Http) {
 
+  constructor(private fb: FormBuilder, private http: Http) {
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      var responsePath = JSON.parse(response);
+      this.uploader.clearQueue();
+    };
+
+    this.uploader.onBeforeUploadItem = (fileItem: any) => {
+      this.uploader.options.additionalParameter =  this.student
+    };
   }
 
   ngOnInit() {
@@ -24,21 +40,35 @@ export class EditStudentComponent implements OnInit {
       this.student = {};
     } else {
       this.student = this.data;
-      this.image = `../../assets/${this.student.image}`
+      this.image = `http://localhost:3000/upload/${this.student.image}`
       // this.student.image = null;
     }
-    this.getCourses(this.student.id);
+    this.getAllCourses(this.student.id);
+    this.getCourses();
   }
 
-  getCourses(student) {
+  getAllCourses(student) {
     this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {
       this.studentCourses = JSON.parse(data['_body']);
       console.log(this.studentCourses);
     });
   }
 
+  getCourses() {
+    // this.http.get(`http://localhost:3000/student-cours/${student}`).subscribe(data => {}
+    this.http.get('http://localhost:3000/courses').subscribe(data => {
+      this.courses  = JSON.parse(data['_body']);
+      console.log(this.courses);
+    });
+  }
+
   editStudent() {
+    if (this.uploader.queue.length > 0 ){
+      this.uploader.uploadAll();
+    }
+
     this.http.post(`http://localhost:3000/student/update/${this.student.id}`, { student: this.student }).subscribe(data => {
+      console.log(this.student.id);
       if ('ok' == data['_body']) {
         console.log('saved');
       } else {
@@ -46,8 +76,7 @@ export class EditStudentComponent implements OnInit {
       }
     });
   }
-
-  deleteStudent() {
+deleteStudent() {
     this.http.delete(`http://localhost:3000/student/delete/${this.student.id}`)
       .subscribe(
       (response) => console.log(response['_body']),

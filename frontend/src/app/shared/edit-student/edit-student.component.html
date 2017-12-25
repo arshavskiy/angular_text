@@ -4,14 +4,18 @@
   </div>
   <span class="under_line"></span>
   <div id="form">
-    <input type="text" [(ngModel)]="student.name">
-    <input type="text" [(ngModel)]="student.phone">
-    <input type="email" [(ngModel)]="student.email">
-    <input type="file" [ngModel]="student.image">
-    <img [src]="image" alt="" style="width:100px; height:auto;">
-    <div *ngFor="let course of courses">
-      <label>
-        <input type="checkbox" [value]="course.checked" (change)="course.checked = $event.target.checked">{{course.name}}
+    <div class="input">
+      <input type="text" [(ngModel)]="student.name">
+      <input type="text" [(ngModel)]="student.phone">
+      <input type="email" [(ngModel)]="student.email">
+    </div>
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+    <img [src]="image">
+    <div class="holder">
+      <label *ngFor="let course of courses">
+        <input type="checkbox"
+               [value]="course.name"
+               (change)="course.checked = $event.target.checked">{{course.name}}
       </label>
     </div>
     <button (click)="editStudent()">Save</button>

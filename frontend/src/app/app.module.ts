@@ -26,6 +26,8 @@ import { AddCourseComponent } from './shared/add-course/add-course.component';
 import { EditCourseComponent } from './shared/edit-course/edit-course.component';
 import { EditStudentComponent } from './shared/edit-student/edit-student.component';
 
+import { FileUploadModule } from 'ng2-file-upload';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +53,8 @@ import { EditStudentComponent } from './shared/edit-student/edit-student.compone
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(AppRoutes)
+    RouterModule.forRoot(AppRoutes),
+    FileUploadModule
   ],
   providers: [
     AuthService

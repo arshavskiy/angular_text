@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.userName = 'David';
-    this.http.get('http://localhost:3000/students').subscribe(data => {
+      this.http.get('http://localhost:3000/students').subscribe(data => {
       this.students = JSON.parse(data['_body']);
     });
   }

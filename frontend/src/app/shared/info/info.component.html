@@ -1,6 +1,6 @@
 <section>
   <div class='img-holder'>
-    <img src='../../../assets/{{viewData.data.image}}'>
+    <img src='http://localhost:3000/upload/{{viewData.data.image}}'>
   </div>
   <div class='text-holder'>
     <!-- <div (click)="getCourses(viewData.data.id)"> -->
@@ -20,7 +20,7 @@
 
   <div *ngFor="let cours of studentCourses" class="courses">
     <div class="cours_image">
-      <img src='../../../assets/{{cours.image}}'>
+      <img src='http://localhost:3000/upload/{{cours.image}}'>
     </div>
     <div class="cours_name">
       <strong>
@@ -31,7 +31,7 @@
 
   <div *ngFor="let student of courseStudents" class="courses">
     <div class="cours_image">
-      <img src='../../../assets/{{student.image}}'>
+      <img src='http://localhost:3000/upload/{{student.image}}'>
     </div>
     <div class="cours_name">
       <strong>

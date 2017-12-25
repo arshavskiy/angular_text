@@ -16,7 +16,7 @@ export class EditCourseComponent implements OnInit {
       this.course = {}
     } else {
       this.course = this.data;
-      this.image = `../../assets/${this.course.image}`
+      this.image = `http://localhost:3000/upload/${this.course.image}`
       // this.course.image = null;
     }
   }

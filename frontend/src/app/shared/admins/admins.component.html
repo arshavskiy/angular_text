@@ -1,18 +1,31 @@
-<section *ngIf="admins">
-  <div *ngFor="let admin of admins" class='student-container'>
-    <div class='img-holder'>
-      <img src='../../../assets/{{admin.image}}'>
-    </div>
+<section *ngIf="admin">
+  <div class='box'>
     <div class='text-holder'>
-      <a href="">
-        <span>
-          <strong>{{ admin.name }}</strong> (Id:{{admin.id}})
-        </span>
-        <br>
-        <span>
-          {{ admin.email }}
-        </span>
-      </a>
+      <span>
+        <strong>{{ admin.name }}</strong> (Id:{{admin.id}})
+      </span>
+      <small class="email">
+        {{ admin.email }}
+      </small>
+    </div>
+    <div class='img-holder'>
+      <img src='http://localhost:3000/upload/{{admin.image}}'>
+    </div>
+  </div>
+</section>
+
+<section class="allAdmins" *ngIf="allAdmins">
+  <div *ngFor="let all of allAdmins" class='box'>
+    <div class='text-holder'>
+      <span>
+        <strong>{{ all.name }}</strong> (Id:{{all.id}})
+      </span>
+      <small class="email">
+        {{ all.email }}
+      </small>
+    </div>
+    <div class='img-holder'>
+      <img src='http://localhost:3000/upload/{{all.image}}'>
     </div>
   </div>
 </section>

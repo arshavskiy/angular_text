@@ -1,0 +1,23 @@
+section {
+  width: 220px;
+  padding-top: 5px;
+}
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.img-holder img {
+  height: 40px;
+  float: right;
+}
+strong {
+  text-transform: capitalize;
+}
+section.allAdmins .box {
+  padding: 10px 0;
+}
+section.allAdmins .img-holder img {
+  height: 40px;
+  float: right;
+}
