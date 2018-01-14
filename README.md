@@ -7,5 +7,5 @@ School admin project build with angular, node and mysql.<br>
 5. in frontend folder run npm install. <br>
 6. in server folder run node server. server will run on localhost:3000. <br>
 7. in frontend folder run npm start or ng serve project will run on localhost:4200. <br>
-8. login with user: Pavel and paswword asd. <br>
+8. login with user: Pavel and password "asd". <br>
 
