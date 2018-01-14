@@ -63,18 +63,15 @@ export class EditStudentComponent implements OnInit {
   }
 
   editStudent() {
-    if (this.uploader.queue.length > 0 ){
+    if (this.uploader.queue.length > 0) {
       this.uploader.uploadAll();
-    }
+    } else {
 
-    this.http.post(`http://localhost:3000/student/update/${this.student.id}`, { student: this.student }).subscribe(data => {
-      console.log(this.student.id);
-      if ('ok' == data['_body']) {
-        console.log('saved');
-      } else {
-        console.log('not sababa');
-      }
-    });
+      this.http.post(`http://localhost:3000/student/update/${this.student.id}`, {student: this.student}).subscribe(data => {
+        console.log(this.student.id);
+
+      });
+    }
   }
 deleteStudent() {
     this.http.delete(`http://localhost:3000/student/delete/${this.student.id}`)
