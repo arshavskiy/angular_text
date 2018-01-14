@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2017 at 11:31 AM
+-- Generation Time: Jan 14, 2018 at 09:06 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -41,9 +41,9 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `phone`, `email`, `image`, `password`, `roles_id`) VALUES
-(13, 'clifford carr', '0503332378', 'clifford@gmail.com', '58.jpg', '$2y$10$iln8aNUWb/TNkPFu3I4pe.sWM2MCMJgxKJUJt4a1t/xNL2HzG9Szi', 1),
-(22, 'Pavel', '0586281637', 'arshavsky.pasha@gmail.com', 'us.jpg', '$2y$10$1.fQzTnMktHCo2y/JjvIV.s.LBPmDnranqDhdneuvfyEvwH/xV/M2', 2),
-(23, 'Osefine ', '0521456423', 'osefine@gmail.com', '67.jpg', '$2y$10$/RrFLhjNB7CSDX44/pTFnu14/x/r6urDB54FHGdkLTtgW98wF7MvW', 3);
+(13, 'clifford carr', '0503332378', 'clifford@gmail.com', '58.jpg', '7815696ecbf1c96e6894b779456d330e', 1),
+(22, 'Pavel', '0586281637', 'arshavsky.pasha@gmail.com', 'us.jpg', '7815696ecbf1c96e6894b779456d330e', 2),
+(23, 'Osefine ', '0521456423', 'osefine@gmail.com', '67.jpg', '7815696ecbf1c96e6894b779456d330e', 3);
 
 -- --------------------------------------------------------
 
