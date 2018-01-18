@@ -4,9 +4,9 @@
   </div>
   <span class="under_line"></span>
   <div>
-    <input type="text" [(ngModel)]="course.name">
-    <textarea name="" id="" cols="30" rows="10" [(ngModel)]="course.des"></textarea>
-    <input type="file" [(ngModel)]="course.image">
-    <button>Save</button>
+    <input type="text" placeholder="Name" (ngModel)="course.name">
+    <textarea name="" placeholder="Desciption" (ngModel)="course.des"></textarea>
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+    <button class="save" (click)="createNewCourse()">Save</button>
   </div>
 </section>

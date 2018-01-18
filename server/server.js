@@ -101,11 +101,49 @@ app.post('/student/', function (req, res, fields) {
 
     console.log('req.body:');
     console.log(req.body);
-
     var data = {
         name: req.body.student.name,
         phone: req.body.student.phone,
         email: req.body.student.email,
+    };
+    console.log('data:');
+    console.log(data);
+
+    let sql = 'INSERT INTO students SET ? ';
+    con.query(sql, [data], (err, data) => {
+        if (err) throw err;
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send('ok');
+    });
+});
+
+app.post('/upload/course', upload.single('file'), function (req, res, next) {
+    console.log(req.file, req.body);
+    JSON.stringify(req.body);
+    var data = {
+        name: req.body.name,
+        des: req.body.des,
+        image: req.file.filename
+    };
+
+    let sql = 'INSERT INTO courses SET ? ';
+    con.query(sql, [data], (err, data) => {
+        if (err) throw err;
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).send(data);
+        console.log(data);
+    });
+
+});
+
+app.post('/course/', function (req, res, fields) {
+
+    console.log('req.body:');
+    console.log(req.body.course);
+
+    var data = {
+        name: req.body.course.name,
+        des: req.body.course.des,
     };
 
     console.log('data:');

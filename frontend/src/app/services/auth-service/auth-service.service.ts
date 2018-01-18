@@ -9,10 +9,7 @@ export class AuthService {
   public name: any;
   private password: Array<any>;
 
-  constructor(
-    private http: Http,
-  ) {
-  }
+  constructor(    private http: Http  ) {}
 
   login(user, onSuccess) {
 
