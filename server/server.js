@@ -84,10 +84,11 @@ app.post('/upload', upload.single('file'), function (req, res, next) {
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
-        image: req.file.filename
+        image: req.file.filename,
+        id: req.params.id
     };
 
-    let sql = 'INSERT INTO students SET ? ';
+    let sql = 'UPDATE students SET ? WHERE id=?';
     con.query(sql, [data], (err, data) => {
         if (err) throw err;
         res.setHeader('Content-Type', 'application/json');
@@ -188,8 +189,9 @@ app.delete('/student/delete/:id', function (req, res, fields) {
 
 app.post('/student/update/:id', function (req, res, fields) {
     console.log(req.params.id);
+    console.log(req.body);
     let sql = 'UPDATE students SET name=?, phone=?, email=?, image=? WHERE id=? ';
-    con.query(sql, [req.body.student.name, req.body.student.phone, req.body.student.email, req.params.id], (err, data) => {
+    con.query(sql, [req.body.student.name, req.body.student.phone, req.body.student.email, req.body.student.image, req.params.id], (err, data) => {
         if (err) throw err;
         res.setHeader('Content-Type', 'application/json');
         res.status(200).send('ok');
